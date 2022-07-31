@@ -1,0 +1,108 @@
+import pandas as pd
+import matplotlib.pylab as plt
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+df_jobdetailsdata = pd.read_csv('/content/drive/MyDrive/hrdatatest/hrdatatest - Job Details Data.csv')
+
+df_personaldata = pd.read_csv('/content/drive/MyDrive/hrdatatest/hrdatatest - Personal Data.csv')
+
+df_surveydata = pd.read_csv('/content/drive/MyDrive/hrdatatest/hrdatatest - Survey Data.csv')
+df_jobdetailsdata.head()
+
+df_personaldata.head()
+
+df_surveydata.head()
+
+import numpy as np
+
+# replace "?" to NaN
+df_jobdetailsdata.replace("?", np.nan, inplace = True)
+df_personaldata.replace("?", np.nan, inplace = True)
+df_surveydata.replace("?", np.nan, inplace = True)
+df_jobdetailsdata.head(5)
+
+missingjobdetailsdata_data = df_jobdetailsdata.isnull()
+missingjobdetailsdata_data.head(5)
+
+missingpersonaldata_data = df_personaldata.isnull()
+missingpersonaldata_data.head(5)
+
+
+missingsurveydata_data = df_surveydata.isnull()
+missingsurveydata_data.head(5)
+
+for column in missingjobdetailsdata_data.columns.values.tolist():
+    print(column)
+    print (missingjobdetailsdata_data[column].value_counts())
+    print("")
+
+for column in missingpersonaldata_data.columns.values.tolist():
+    print(column)
+    print (missingpersonaldata_data[column].value_counts())
+    print("")
+
+for column in missingsurveydata_data.columns.values.tolist():
+    print(column)
+    print (missingsurveydata_data[column].value_counts())
+    print("")
+
+# simply drop whole row with NaN in "price" column
+df_personaldata.dropna(subset=["Gender"], axis=0, inplace=True)
+
+# reset index, because we droped two rows
+df_personaldata.reset_index(drop=True, inplace=True)
+df_personaldata.head()
+
+missingpersonaldata_data = df_personaldata.isnull()
+missingpersonaldata_data.head(5)
+
+for column in missingpersonaldata_data.columns.values.tolist():
+    print(column)
+    print (missingpersonaldata_data[column].value_counts())
+    print("")
+
+df_personaldata.dtypes
+
+df_personaldata["Education"].replace(1, "High School", inplace=True)
+df_personaldata["Education"].replace(2, "Diploma", inplace=True)
+df_personaldata["Education"].replace(3, "Bachelor", inplace=True)
+df_personaldata["Education"].replace(4, "Master", inplace=True)
+df_personaldata["Education"].replace(5, "Doctor", inplace=True)
+
+df_personaldata.head()
+
+df_surveydata.dtypes
+
+df_surveydata["EnvironmentSatisfaction"].replace(1, "Low", inplace=True)
+df_surveydata["EnvironmentSatisfaction"].replace(2, "Medium", inplace=True)
+df_surveydata["EnvironmentSatisfaction"].replace(3, "High", inplace=True)
+df_surveydata["EnvironmentSatisfaction"].replace(4, "Very High", inplace=True)
+
+df_surveydata.head()
+
+df_surveydata["JobInvolvement"].replace(1, "Low", inplace=True)
+df_surveydata["JobInvolvement"].replace(2, "Medium", inplace=True)
+df_surveydata["JobInvolvement"].replace(3, "High", inplace=True)
+df_surveydata["JobInvolvement"].replace(4, "Very High", inplace=True)
+
+df_surveydata.head()
+
+df_surveydata["JobSatisfaction"].replace(1, "Low", inplace=True)
+df_surveydata["JobSatisfaction"].replace(2, "Medium", inplace=True)
+df_surveydata["JobSatisfaction"].replace(3, "High", inplace=True)
+df_surveydata["JobSatisfaction"].replace(4, "Very High", inplace=True)
+
+df_surveydata.head()
+
+df_jobdetailsdata.dtypes
+
+df_jobdetailsdata["PerformanceRating"].replace(1, "Low", inplace=True)
+df_jobdetailsdata["PerformanceRating"].replace(2, "Medium", inplace=True)
+df_jobdetailsdata["PerformanceRating"].replace(3, "High", inplace=True)
+df_jobdetailsdata["PerformanceRating"].replace(4, "Very High", inplace=True)
+
+plt.bar(['Male','Female'], df_personaldata['Gender'].value_counts())
+
+df_personaldata.pie([df_personaldata['Gender']value_counts,Female], df_personaldata['Gender'].value_counts())
